@@ -1,21 +1,20 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const CountrySchema = new Schema({
-    isoCode: { type: String, required: true },
+const CitySchema = new Schema({
     name: { type: String, required: true },
     phonecode: { type: String, required: true, unique: true },
-    flag: { type: String, required: true },
     creator: {
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
-    cities: {
+    country: {
         type: Schema.Types.ObjectId,
-        ref: 'City'
+        ref: 'Country',
+        required: true
     }
 }, { timestamps: true })
 
-const Country = mongoose.model('Country', CountrySchema)
-module.exports = Country
+const City = mongoose.model('City', CitySchema)
+module.exports = City
