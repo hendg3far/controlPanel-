@@ -1,10 +1,9 @@
 const City = require('../models/city');
-
+const Country = require('../models/country');
 
 module.exports.save_city = async(req, res) => {
-
     try {
-        let newCity = new City({...req.body, creator: req.user.id })
+        let newCity = new City({...req.body, creator: req.user.id, country: req.body.countryId })
         const city = await newCity.save()
         res.status(201).json({ city })
 

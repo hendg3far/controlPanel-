@@ -13,7 +13,7 @@ module.exports.save_country = async(req, res) => {
 
 module.exports.get_countries = async(req, res) => {
     try {
-        const countries = await Country.find();
+        const countries = await Country.find().populate('cities');
         return res.status(200).json(countries);
     } catch (error) {
         res.status(500).json(error)
