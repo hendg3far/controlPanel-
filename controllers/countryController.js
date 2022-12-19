@@ -1,9 +1,11 @@
+const City = require('../models/city');
 const Country = require('../models/country');
 
 
 module.exports.save_country = async(req, res) => {
     try {
         let newCountry = new Country({...req.body, creator: req.user.id, flag: req.file.path })
+
         const country = await newCountry.save()
         res.status(201).json({ country })
     } catch (err) {
@@ -13,7 +15,7 @@ module.exports.save_country = async(req, res) => {
 
 module.exports.get_countries = async(req, res) => {
     try {
-        const countries = await Country.find().populate('cities');
+        const countries = await Country.find()
         return res.status(200).json(countries);
     } catch (error) {
         res.status(500).json(error)
