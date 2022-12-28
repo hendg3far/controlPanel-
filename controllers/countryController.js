@@ -1,10 +1,11 @@
 const Country = require('../models/country');
 
-
 module.exports.save_country = async(req, res) => {
+    console.log(req.files)
     try {
         let newCountry = new Country({...req.body, creator: req.user.id, flag: req.file.path })
         const country = await newCountry.save()
+        console.log(country)
         res.status(201).json({ country })
     } catch (err) {
         res.status(500).json(err)

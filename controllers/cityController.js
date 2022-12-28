@@ -2,12 +2,14 @@ const City = require('../models/city');
 const Country = require('../models/country');
 
 module.exports.save_city = async(req, res) => {
+    const country = await Country.findById({ _id: req.body.country });
+    if (!country)
+        return res.status(400).send("Country ID invalid");
     try {
         let newCity = new City({...req.body, creator: req.user.id })
         await Country.updateMany({ '_id': newCity.country }, { $push: { cities: newCity._id } });
         const city = await newCity.save()
         res.status(201).json({ city })
-
     } catch (err) {
         res.status(500).json(err)
     }
@@ -47,6 +49,7 @@ module.exports.update_city = async(req, res) => {
 module.exports.delete_city = async(req, res) => {
     try {
         const city = await City.findByIdAndDelete({ _id: req.params.id }, req.body)
+        await Country.updateMany({ '_id': city.country }, { $pull: { cities: city._id } });
         res.status(201).json(city);
 
     } catch (err) {
