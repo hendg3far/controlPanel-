@@ -13,7 +13,11 @@ const CitySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Country',
         required: true
-    }
+    },
+    products: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Product'
+    }],
 }, { timestamps: true })
 
 const City = mongoose.model('City', CitySchema)
