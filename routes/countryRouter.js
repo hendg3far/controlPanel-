@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const countryController = require('../controllers/countryController');
-const upload = require('../controllers/uploadController')
-
+const upload = require('../controllers/uploadController');
 
 router.get('/', countryController.get_countries)
 router.post('/', upload.single('flag'), countryController.save_country)

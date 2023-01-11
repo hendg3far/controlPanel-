@@ -3,14 +3,12 @@ const Country = require('../models/country');
 const Product = require('../models/product');
 
 module.exports.save_product = async(req, res) => {
-    console.log(req.files)
     const country = await Country.findById({ _id: req.body.country });
     const city = await City.findById({ _id: req.body.city });
     if (!country && city)
         return res.status(400).send("Country or City ID invalid");
     try {
-        const multiImg = req.files
-        let newProduct = new Product({...req.body, creator: req.user.id, multiImg: multiImg });
+        let newProduct = new Product({...req.body, creator: req.user.id, multiImg: req.files.map(file => file.path) });
         await Country.updateMany({ '_id': newProduct.country }, { $push: { products: newProduct._id } });
         await City.updateMany({ '_id': newProduct.city }, { $push: { products: newProduct._id } });
         const product = await newProduct.save()
