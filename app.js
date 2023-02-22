@@ -6,6 +6,7 @@ const userRouter = require('./routes/userRouter');
 const countryRouter = require('./routes/countryRouter');
 const cityRouter = require('./routes/cityRouter');
 const productRouter = require('./routes/productRouter');
+const settingRouter = require('./routes/settingRouter')
 
 const { requireAuth } = require('./middlewares/authMiddleware');
 
@@ -36,3 +37,4 @@ app.use('/dashboard/users', requireAuth, userRouter)
 app.use('/dashboard/countries', requireAuth, countryRouter)
 app.use('/dashboard/cities', requireAuth, cityRouter)
 app.use('/dashboard/products', requireAuth, productRouter)
+app.use('/dashboard/setting', requireAuth, settingRouter)
